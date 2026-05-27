@@ -22,7 +22,6 @@ public class PenggajianAPP {
 
         Penggajian penggajian = new Penggajian("Mei 2026", "output");
 
-        // Jalankan proses penggajian (sudah include 4 slip mingguan)
         penggajian.prosesSemuaPenggajian(company);
     }
 }

@@ -17,27 +17,20 @@ public class TestUnit {
 
     @BeforeEach
     public void setUp() {
-        // Pegawai Umum
         pegawaiUmum1 = new Pegawai("P001", "Budi Santoso", "Staff", 4500000);
         pegawaiUmum2 = new Pegawai("P002", "Siti Rahayu", "Staff", 4200000);
 
-        // Manager
         manager1 = new Manager("M001", "Ahmad Fauzi", 8500000, 6, 700000);
         manager2 = new Manager("M002", "Dewi Sartika", 9000000, 4, 750000);
 
-        // Sales
         sales1 = new Sales("S001", "Citra Dewi", 4000000, 28000000, 0.1);
         sales2 = new Sales("S002", "Rizky Pratama", 3800000, 12000000, 0.1);
 
-        // Pegawai Harian
         pegawaiHarian1 = new PegawaiHarian("H001", "Doni Prasetyo", 85000, 22);
-
-        // Company dan Penggajian
         company = new Company("Filkom Berkarya");
         penggajian = new Penggajian("Mei 2026", "output");
     }
 
-    // ===== TEST PEGAWAI UMUM =====
     @Test
     @DisplayName("Pegawai Umum - Hitung Gaji Pokok")
     public void testPegawaiUmumHitungGajiPokok() {
@@ -72,7 +65,6 @@ public class TestUnit {
         assertTrue(slip.contains("Staff"));
     }
 
-    // ===== TEST MANAGER =====
     @Test
     @DisplayName("Manager - Hitung Gaji Pokok")
     public void testManagerHitungGajiPokok() {
@@ -109,7 +101,6 @@ public class TestUnit {
         assertTrue(slip.contains("Manager"));
     }
 
-    // ===== TEST SALES (TARGET TERCAPAI) =====
     @Test
     @DisplayName("Sales - Target Tercapai Check")
     public void testSalesTargetTercapai() {
@@ -139,7 +130,6 @@ public class TestUnit {
         assertTrue(slip.contains("Citra Dewi"));
     }
 
-    // ===== TEST SALES (TARGET TIDAK TERCAPAI) =====
     @Test
     @DisplayName("Sales - Target Tidak Tercapai Check")
     public void testSalesTargetTidakTercapai() {
@@ -159,7 +149,6 @@ public class TestUnit {
         assertEquals(expected, sales2.hitungGaji());
     }
 
-    // ===== TEST PEGAWAI HARIAN =====
     @Test
     @DisplayName("Pegawai Harian - Hitung Gaji Pokok (85K × 22 hari)")
     public void testPegawaiHarianHitungGajiPokok() {
@@ -197,7 +186,6 @@ public class TestUnit {
         assertTrue(slip.contains("H001"));
     }
 
-    // ===== TEST COMPANY =====
     @Test
     @DisplayName("Company - Get Nama Perusahaan")
     public void testCompanyGetNamaPerusahaan() {
@@ -232,7 +220,6 @@ public class TestUnit {
         assertNotNull(company.getDaftarPegawai());
     }
 
-    // ===== TEST PENGGAJIAN =====
     @Test
     @DisplayName("Penggajian - Proses Penggajian dengan Multiple Jenis Pegawai")
     public void testPenggajianProsesSemuaPenggajian() {
@@ -240,8 +227,6 @@ public class TestUnit {
         company.tambahPegawai(manager1);
         company.tambahPegawai(sales1);
         company.tambahPegawai(pegawaiHarian1);
-
-        // Tidak throw exception = test passed
         assertDoesNotThrow(() -> penggajian.prosesSemuaPenggajian(company));
     }
 
