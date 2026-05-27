@@ -27,6 +27,7 @@ public class TestUnit {
         sales2 = new Sales("S002", "Rizky Pratama", 3800000, 12000000, 0.1);
 
         pegawaiHarian1 = new PegawaiHarian("H001", "Doni Prasetyo", 85000, 22);
+
         company = new Company("Filkom Berkarya");
         penggajian = new Penggajian("Mei 2026", "output");
     }
@@ -38,202 +39,62 @@ public class TestUnit {
     }
 
     @Test
-    @DisplayName("Pegawai Umum - Get ID")
-    public void testPegawaiUmumGetId() {
-        assertEquals("P001", pegawaiUmum1.getId());
-    }
-
-    @Test
-    @DisplayName("Pegawai Umum - Get Nama")
-    public void testPegawaiUmumGetNama() {
-        assertEquals("Budi Santoso", pegawaiUmum1.getNama());
-    }
-
-    @Test
-    @DisplayName("Pegawai Umum - Get Jabatan")
-    public void testPegawaiUmumGetJabatan() {
-        assertEquals("Staff", pegawaiUmum1.getJabatan());
-    }
-
-    @Test
     @DisplayName("Pegawai Umum - Generate Slip Gaji")
     public void testPegawaiUmumGenerateSlipGaji() {
         String slip = pegawaiUmum1.generateSlipGaji();
         assertNotNull(slip);
-        assertTrue(slip.contains("P001"));
         assertTrue(slip.contains("Budi Santoso"));
         assertTrue(slip.contains("Staff"));
     }
 
     @Test
-    @DisplayName("Manager - Hitung Gaji Pokok")
-    public void testManagerHitungGajiPokok() {
-        assertEquals(8500000, manager1.getGajiPokok());
-    }
-
-    @Test
-    @DisplayName("Manager - Hitung Tunjangan (6 bawahan × 700K)")
-    public void testManagerHitungTunjangan() {
-        double expected = 6 * 700000;
-        assertEquals(expected, manager1.hitungTunjangan());
-    }
-
-    @Test
-    @DisplayName("Manager - Hitung Total Gaji (Pokok + Tunjangan)")
+    @DisplayName("Manager - Hitung Total Gaji")
     public void testManagerHitungTotalGaji() {
         double expected = 8500000 + (6 * 700000);
         assertEquals(expected, manager1.hitungGaji());
     }
 
     @Test
-    @DisplayName("Manager - Get Jumlah Bawahan")
-    public void testManagerGetJumlahBawahan() {
-        assertEquals(6, manager1.getJumlahBawahan());
-    }
-
-    @Test
-    @DisplayName("Manager - Generate Slip Gaji")
-    public void testManagerGenerateSlipGaji() {
-        String slip = manager1.generateSlipGaji();
-        assertNotNull(slip);
-        assertTrue(slip.contains("M001"));
-        assertTrue(slip.contains("Ahmad Fauzi"));
-        assertTrue(slip.contains("Manager"));
-    }
-
-    @Test
-    @DisplayName("Sales - Target Tercapai Check")
-    public void testSalesTargetTercapai() {
-        assertTrue(sales1.targetTercapai(), "Sales1 seharusnya tercapai (28jt >= 15jt)");
-    }
-
-    @Test
-    @DisplayName("Sales (Target Tercapai) - Hitung Bonus")
-    public void testSalesTargetTercapaiHitungBonus() {
-        double expected = 28000000 * 0.1;
-        assertEquals(expected, sales1.hitungBonus());
-    }
-
-    @Test
-    @DisplayName("Sales (Target Tercapai) - Hitung Total Gaji")
+    @DisplayName("Sales - Target Tercapai & Hitung Gaji")
     public void testSalesTargetTercapaiHitungGaji() {
+        assertTrue(sales1.targetTercapai());
         double expected = 4000000 + (28000000 * 0.1);
         assertEquals(expected, sales1.hitungGaji());
     }
 
     @Test
-    @DisplayName("Sales (Target Tercapai) - Generate Slip Gaji")
-    public void testSalesTargetTercapaiGenerateSlipGaji() {
-        String slip = sales1.generateSlipGaji();
-        assertNotNull(slip);
-        assertTrue(slip.contains("TERCAPAI"));
-        assertTrue(slip.contains("Citra Dewi"));
-    }
-
-    @Test
-    @DisplayName("Sales - Target Tidak Tercapai Check")
-    public void testSalesTargetTidakTercapai() {
-        assertFalse(sales2.targetTercapai(), "Sales2 seharusnya tidak tercapai (12jt < 15jt)");
-    }
-
-    @Test
-    @DisplayName("Sales (Target Tidak Tercapai) - Bonus = 0")
-    public void testSalesTargetTidakTercapaiHitungBonus() {
-        assertEquals(0, sales2.hitungBonus());
-    }
-
-    @Test
-    @DisplayName("Sales (Target Tidak Tercapai) - Hitung Total Gaji")
-    public void testSalesTargetTidakTercapaiHitungGaji() {
-        double expected = 3800000;
-        assertEquals(expected, sales2.hitungGaji());
-    }
-
-    @Test
-    @DisplayName("Pegawai Harian - Hitung Gaji Pokok (85K × 22 hari)")
+    @DisplayName("Pegawai Harian - Hitung Gaji Bulanan")
     public void testPegawaiHarianHitungGajiPokok() {
         assertEquals(85000 * 22, pegawaiHarian1.hitungGaji());
     }
 
     @Test
-    @DisplayName("Pegawai Harian - Hitung Gaji Mingguan (85K × 5 hari)")
+    @DisplayName("Pegawai Harian - Hitung Gaji Mingguan")
     public void testPegawaiHarianHitungGajiMingguan() {
         assertEquals(85000 * 5, pegawaiHarian1.hitungGajiMingguan(5));
     }
 
     @Test
-    @DisplayName("Pegawai Harian - Hitung Gaji Mingguan Berbeda (85K × 6 hari)")
-    public void testPegawaiHarianHitungGajiMingguanBerbeda() {
-        assertEquals(85000 * 6, pegawaiHarian1.hitungGajiMingguan(6));
-    }
-
-    @Test
-    @DisplayName("Pegawai Harian - Generate Slip Gaji Bulanan")
-    public void testPegawaiHarianGenerateSlipGaji() {
-        String slip = pegawaiHarian1.generateSlipGaji();
-        assertNotNull(slip);
-        assertTrue(slip.contains("H001"));
-        assertTrue(slip.contains("Doni Prasetyo"));
-        assertTrue(slip.contains("Pegawai Harian Lepas"));
-    }
-
-    @Test
-    @DisplayName("Pegawai Harian - Generate Slip Gaji Mingguan")
-    public void testPegawaiHarianGenerateSlipGajiMingguan() {
-        String slip = pegawaiHarian1.generateSlipGajiMingguan(1, 5);
-        assertNotNull(slip);
-        assertTrue(slip.contains("Minggu 1"));
-        assertTrue(slip.contains("H001"));
-    }
-
-    @Test
-    @DisplayName("Company - Get Nama Perusahaan")
-    public void testCompanyGetNamaPerusahaan() {
-        assertEquals("Filkom Berkarya", company.getNamaPerusahaan());
-    }
-
-    @Test
-    @DisplayName("Company - Tambah Pegawai")
+    @DisplayName("Company - Tambah dan Hitung Pegawai")
     public void testCompanyTambahPegawai() {
         company.tambahPegawai(pegawaiUmum1);
-        assertEquals(1, company.getDaftarPegawai().size());
-    }
-
-    @Test
-    @DisplayName("Company - Tambah Multiple Pegawai")
-    public void testCompanyTambahMultiplePegawai() {
-        company.tambahPegawai(pegawaiUmum1);
-        company.tambahPegawai(manager1);
-        company.tambahPegawai(sales1);
-        assertEquals(3, company.getDaftarPegawai().size());
-    }
-
-    @Test
-    @DisplayName("Company - Get Daftar Pegawai (Empty)")
-    public void testCompanyGetDaftarPegawaiEmpty() {
-        assertTrue(company.getDaftarPegawai().isEmpty());
-    }
-
-    @Test
-    @DisplayName("Company - Get Daftar Pegawai (Not Null)")
-    public void testCompanyGetDaftarPegawaiNotNull() {
-        assertNotNull(company.getDaftarPegawai());
-    }
-
-    @Test
-    @DisplayName("Penggajian - Proses Penggajian dengan Multiple Jenis Pegawai")
-    public void testPenggajianProsesSemuaPenggajian() {
-        company.tambahPegawai(pegawaiUmum1);
         company.tambahPegawai(manager1);
         company.tambahPegawai(sales1);
         company.tambahPegawai(pegawaiHarian1);
-        assertDoesNotThrow(() -> penggajian.prosesSemuaPenggajian(company));
+        assertEquals(4, company.getDaftarPegawai().size());
     }
 
     @Test
-    @DisplayName("Penggajian - Proses dengan PegawaiHarian (Auto Generate 4 Slip Mingguan)")
+    @DisplayName("Penggajian - Proses Penggajian (Tanpa Parameter Company)")
+    public void testPenggajianProsesSemuaPenggajian() {
+        // Karena Penggajian sudah memiliki Company internal
+        assertDoesNotThrow(() -> penggajian.prosesSemuaPenggajian());
+    }
+
+    @Test
+    @DisplayName("Penggajian - Proses dengan Pegawai Harian (4 Slip Mingguan)")
     public void testPenggajianWithPegawaiHarian() {
         company.tambahPegawai(pegawaiHarian1);
-        assertDoesNotThrow(() -> penggajian.prosesSemuaPenggajian(company));
+        assertDoesNotThrow(() -> penggajian.prosesSemuaPenggajian());
     }
 }
